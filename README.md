@@ -38,15 +38,15 @@ The logical switch **AWS_DEPLOY_TERRAFORM** is set to enable or disable the depl
 Scripting has always a significant drawback that is detrimental in understanding how things works and how they were built. It masks the behavior and logic for the sake of efficiency and this is never a good thing. It's imperative to understand the scripts because they will break and you need to know where and how to fix it.
 
 I have always focused in supporting one key factor in automation:
-## [Readability](https://en.wikipedia.org/wiki/Computer_programming#Readability_of_source_code)
+### [Readability](https://en.wikipedia.org/wiki/Computer_programming#Readability_of_source_code)
 
 
 Combining all these steps into a single script is super simple but for me is more important to explain how it works than to obscure its logic with something scripted that then you will not be able to understand.
 
----
-
 I will guide you now through the process of configuring AWS Assume Role from scratch without having to use the Web-Console.
 The process goes as follow:
+
+---
 
 You must define these environment variables that will be used across these steps.
 Note: Make sure to set the AWS_DEFAULT_ACCOUNT with the correct information (the AWS Account you will be deploying this setup).
@@ -75,9 +75,9 @@ declare -a AWS_CREDENTIALS_TOKENS=(
 export DEFAULT_ROLEDURATION=3600;
 ```
 
-A JSON file needs to be generated to define what this AWS IAM Policy (**DevOps--Custom-Access.Policy**) will allow the **Service-Account** (*terraform*) to perform the opperations that needs.
+A JSON file needs to be generated to define what this AWS IAM Policy **DevOps--Custom-Access.Policy** will allow the **Service-Account** (*terraform*) to perform the privileges that are required.
 
-Note: I will start monitoring this service account's behavior (terraform) and accordingly restrict its privileges based on what is actually "required".
+Note: I will start monitoring this service account's behavior (terraform) and accordingly restrict its privileges based on what is actually **required**.
 
 ```console
 CONFIG_JSON="/tmp/${DEVOPS_ACCESS_POLICY}.json";
