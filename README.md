@@ -33,14 +33,13 @@ The logical switch **AWS_DEPLOY_TERRAFORM** is set to enable or disable the depl
 
 **Note**: In addition to these basic/core requirements, it's important that a key-name **terraform** be created/active in AWS as it's hardcoded in this prototype. 
 
+---
 
-Scripting has a significant drawback that is detrimental in understanding. It masks the behavior and logic for the sake of efficiency and this is never a good thing. It's imperative to understand the scripts because they will break and you need to know where and how to fix it.
+Scripting has always a significant drawback that is detrimental in understanding how things works and how they were built. It masks the behavior and logic for the sake of efficiency and this is never a good thing. It's imperative to understand the scripts because they will break and you need to know where and how to fix it.
 
-I personally and professionally despise people that uses the latest-latest technology innovation for the sake of pure vanity and childish logic to satisfy nothing but their ego and promote an environment of job-security. For that reason alone, I have always focused in supporting one key factor in automation:
-
+I have always focused in supporting one key factor in automation:
 ## Readability.
 
-It's key for anyone to be able of reading and understand what you write and not in following the idiotic Perl mentality of "I am going to show you how awesome I am building 100 commands into a single uber-cryptic one liner that only you can understand. That is not good programming at all.
 
 Combining all these steps into a single script is super simple but for me is more important to explain how it works than to obscure its logic with something scripted that then you will not be able to understand.
 
@@ -76,9 +75,8 @@ declare -a AWS_CREDENTIALS_TOKENS=(
 export DEFAULT_ROLEDURATION=3600;
 ```
 
-A JSON file needs to be generated that will define what this AWS IAM Policy (**DevOps--Custom-Access.Policy**) and will be provisioned in the AWS IAM Role (**DevOps--Custom-Access.Role**). This AWS IAM Policy will allow the **Service-Account** (*terraform*) to perform the opperations that needs.
+A JSON file needs to be generated to define what this AWS IAM Policy (**DevOps--Custom-Access.Policy**) will allow the **Service-Account** (*terraform*) to perform the opperations that needs.
 
-This AWS IAM Policy.
 Note: I will start monitoring this service account's behavior (terraform) and accordingly restrict its privileges based on what is actually "required".
 
 ```console
