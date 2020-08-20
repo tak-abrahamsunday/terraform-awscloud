@@ -75,7 +75,7 @@ declare -a AWS_CREDENTIALS_TOKENS=(
 export DEFAULT_ROLEDURATION=3600;
 ```
 
-<span style="color:red">**01**</span>. Generate a JSON file to define what this AWS IAM Policy **DevOps--Custom-Access.Policy** will allow the **Service-Account** (***terraform***) to perform the privileges that are required. This policy will be attached to the AWS IAM Role **DevOps--Custom-Access.Role**.
+**<span style="color:red">01</span>** -) Generate a JSON file to define what this AWS IAM Policy **DevOps--Custom-Access.Policy** will allow the **Service-Account** (***terraform***) to perform the privileges that are required. This policy will be attached to the AWS IAM Role **DevOps--Custom-Access.Role**.
 
 **Note**: I will start monitoring this service account's behavior (***terraform***) and accordingly restrict its privileges based on what is actually **required**.
 
@@ -115,7 +115,7 @@ tee -a ${CONFIG_JSON} <<BLOCK
 BLOCK
 ```
 
-**02**. Create the AWS IAM Policy **DevOps--Custom-Access.Policy**:
+**<span style="color:red">02</span>** -) Create the AWS IAM Policy **DevOps--Custom-Access.Policy**:
 
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
@@ -142,7 +142,7 @@ aws --profile ${DEFAULT_PROFILE} \
 }
 ```
 
-**03**. Generate a JSON file to enforce via an AWS IAM Policy **Devops--Permission-Boundaries.Policy** what can be allowed and deny privileges that could be attempted to be self-granted (e.g.: Administrator Access, etc.). This policy will be attached to the AWS IAM Role **DevOps--Custom-Access.Role**.
+**<span style="color:red">03</span>** -) Generate a JSON file to enforce via an AWS IAM Policy **Devops--Permission-Boundaries.Policy** what can be allowed and deny privileges that could be attempted to be self-granted (e.g.: Administrator Access, etc.). This policy will be attached to the AWS IAM Role **DevOps--Custom-Access.Role**.
 
 ```console
 CONFIG_JSON="/tmp/${DEVOPS_CUSTOM_BOUNDARY}.json";
@@ -215,7 +215,7 @@ tee -a ${CONFIG_JSON} <<BLOCK
 BLOCK
 ```
 
-**04**. Create the IAM Policy **Devops--Permission-Boundaries.Policy**:
+**<span style="color:red">04</span>** -) Create the IAM Policy **Devops--Permission-Boundaries.Policy**:
 
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
@@ -242,7 +242,7 @@ aws --profile ${DEFAULT_PROFILE} \
 }
 ```
 
-**05**. Create the AWS IAM Group **devops**:
+**<span style="color:red">05</span>** -) Create the AWS IAM Group **devops**:
 
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
@@ -263,7 +263,7 @@ aws --profile ${DEFAULT_PROFILE} \
 }
 ```
 
-**06**. Create the AWS IAM User **terraform**:
+**<span style="color:red">06</span>** -) Create the AWS IAM User **terraform**:
 
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
@@ -284,7 +284,7 @@ aws --profile ${DEFAULT_PROFILE} \
 }
 ```
 
-**07**. Generate the **terraform** User's AWS IAM Access Keys:<br>
+**<span style="color:red">07</span>** -) Generate the **terraform** User's AWS IAM Access Keys:<br>
 **Note**: This user's AWS IAM Access Key will be exported as environment variables (**AWS_ACCESS_KEY_ID**, **AWS_SECRET_ACCESS_KEY**):
 
 ```shell
@@ -304,7 +304,7 @@ counter=0; for xkey in "${iamuser_accesskeys[@]}"; do
 done;
 ```
 
-**08**. Construct the AWS CLI Credentials file core-structure:<br>
+**<span style="color:red">08</span>** -) Construct the AWS CLI Credentials file core-structure:<br>
 **Note**: The default path for the **${AWS_SHARED_CREDENTIALS_FILE}** is set to ***${HOME}/.aws/credentials***
 
 ```shell
@@ -319,7 +319,7 @@ x_security_token_expires =
 " > ${target_credfile};
 ```
 
-**09**. Attach the AWS IAM User **terraform** to the AWS IAM Group **devops**:
+**<span style="color:red">09</span>** -) Attach the AWS IAM User **terraform** to the AWS IAM Group **devops**:
 
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
@@ -329,7 +329,7 @@ aws --profile ${DEFAULT_PROFILE} \
     --group-name ${DEVOPS_GROUP} ;
 ```
 
-**10**. Fetch & Display the AWS IAM Group **devops** configuration:
+**<span style="color:red">10</span>** -) Fetch & Display the AWS IAM Group **devops** configuration:
 
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
@@ -359,7 +359,7 @@ aws --profile ${DEFAULT_PROFILE} \
 }
 ```
 
-**11**. Dynamically generate the AWS IAM Role **DevOps--Custom-Access.Role** granting the Service Account **terraform** the **sts:AssumeRole** capabilities.
+**<span style="color:red">11</span>** -) Dynamically generate the AWS IAM Role **DevOps--Custom-Access.Role** granting the Service Account **terraform** the **sts:AssumeRole** capabilities.
 
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
@@ -399,7 +399,7 @@ aws --profile ${DEFAULT_PROFILE} \
     }
 }
 ```
-**12**. Attach the AWS IAM Policy **DevOps--Custom-Access.Policy** to the AWS IAM Role **DevOps--Custom-Access.Role**:
+**<span style="color:red">12</span>** -) Attach the AWS IAM Policy **DevOps--Custom-Access.Policy** to the AWS IAM Role **DevOps--Custom-Access.Role**:
 
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
@@ -409,7 +409,7 @@ aws --profile ${DEFAULT_PROFILE} \
     --policy-arn arn:aws:iam::${AWS_DEFAULT_ACCOUNT}:policy/${DEVOPS_ACCESS_POLICY} ;
 ```
 
-**13**. Fetch & Display the AWS IAM Role **DevOps--Custom-Access.Role**:
+**<span style="color:red">13</span>** -) Fetch & Display the AWS IAM Role **DevOps--Custom-Access.Role**:
 
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
@@ -445,7 +445,7 @@ aws --profile ${DEFAULT_PROFILE} \
 }
 ```
 
-**14**. Fetch & Display the AWS IAM Role **DevOps--Custom-Access.Role** attached policies:
+**<span style="color:red">14</span>** -) Fetch & Display the AWS IAM Role **DevOps--Custom-Access.Role** attached policies:
 
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
@@ -464,7 +464,7 @@ aws --profile ${DEFAULT_PROFILE} \
     ]
 }
 ```
-**15**. Attach the AWS IAM Policy **Devops--Permission-Boundaries.Policy** to the AWS IAM Role **DevOps--Custom-Access.Role**.
+**<span style="color:red">15</span>** -) Attach the AWS IAM Policy **Devops--Permission-Boundaries.Policy** to the AWS IAM Role **DevOps--Custom-Access.Role**.
 
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
@@ -474,7 +474,7 @@ aws --profile ${DEFAULT_PROFILE} \
     --role-name ${DEVOPS_ACCESS_ROLE};
 ```
 
-**16**. Generate a JSON file to define the AWS IAM Policy **DevOps--Assume-Role.Policy** that specifies the AWS IAM Role **DevOps--Custom-Access.Role** to be assumed by the Service Account **terraform**.
+**<span style="color:red">16</span>** -) Generate a JSON file to define the AWS IAM Policy **DevOps--Assume-Role.Policy** that specifies the AWS IAM Role **DevOps--Custom-Access.Role** to be assumed by the Service Account **terraform**.
 
 ```shell
 CONFIG_JSON="/tmp/${DEVOPS_ASSUME_POLICY}.json";
@@ -502,7 +502,7 @@ BLOCK
 }
 ```
 
-**17**. Create the AWS IAM Policy **DevOps--Assume-Role.Policy**:
+**<span style="color:red">17</span>** -) Create the AWS IAM Policy **DevOps--Assume-Role.Policy**:
 
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
@@ -529,7 +529,7 @@ aws --profile ${DEFAULT_PROFILE} \
 }
 ```
 
-**18**. Attach this AWS IAM Policy **DevOps--Assume-Role.Policy** to the AWS IAM Group **devops**:
+**<span style="color:red">18</span>** -) Attach this AWS IAM Policy **DevOps--Assume-Role.Policy** to the AWS IAM Group **devops**:
 
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
@@ -539,7 +539,7 @@ aws --profile ${DEFAULT_PROFILE} \
     --group-name ${DEVOPS_GROUP};
 ```
 
-**19**. Fetch & Display the AWS IAM Role **DevOps--Assume-Role.Policy** attached policies:
+**<span style="color:red">19</span>** -) Fetch & Display the AWS IAM Role **DevOps--Assume-Role.Policy** attached policies:
 
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
@@ -559,7 +559,7 @@ aws --profile ${DEFAULT_PROFILE} \
 }
 ```
 
-**20**. Reasign the **${AWS_SHARED_CREDENTIALS_FILE}** to activate this custom credentials file **${HOME}/.aws/access/${AWS_DEFAULT_ACCOUNT}/${DEFAULT_PROFILE}.credentials**
+**<span style="color:red">20</span>** -) Reasign the **${AWS_SHARED_CREDENTIALS_FILE}** to activate this custom credentials file **${HOME}/.aws/access/${AWS_DEFAULT_ACCOUNT}/${DEFAULT_PROFILE}.credentials**
 
 ```shell
 AWS_SHARED_CREDENTIALS_FILE="${target_credfile}";
@@ -585,7 +585,7 @@ local counter=0; for xkey in "${session_token[@]}"; do
 done;
 ```
 
-**21**. Attempting to identify the User's (**terraform**) Identity this time will reflect that the user is still using the its default AWS IAM User's credentials and not the AWS IAM Role **DevOps--Custom-Access.Role** that was just assumed.
+**<span style="color:red">21</span>** -) Attempting to identify the User's (**terraform**) Identity this time will reflect that the user is still using the its default AWS IAM User's credentials and not the AWS IAM Role **DevOps--Custom-Access.Role** that was just assumed.
 
 ```shell
 aws --profile ${DEVOPS_USER} \
@@ -600,7 +600,7 @@ aws --profile ${DEVOPS_USER} \
     "Arn": "arn:aws:iam::{{ AWS_DEFAULT_ACCOUNT }}:user/{{ DEVOPS_USER }}"
 }
 ```
-**22**. Once this AWS IAM Role is assumed then these new credentials will need to be stored so they become permanently active at both the environment and file level into a custom credentials file.
+**<span style="color:red">22</span>** -) Once this AWS IAM Role is assumed then these new credentials will need to be stored so they become permanently active at both the environment and file level into a custom credentials file.
 
 ```shell
 declare -a credentials=(
@@ -617,7 +617,7 @@ done;
 cat ${AWS_SHARED_CREDENTIALS_FILE} ;
 ```
 
-**23**. Attempt to identify the User's (caller) Identity this time will reflect the assumed AWS IAM Role **DevOps--Custom-Access.Role** is applied:
+**<span style="color:red">23</span>** -) Attempt to identify the User's (caller) Identity this time will reflect the assumed AWS IAM Role **DevOps--Custom-Access.Role** is applied:
 
 
 ```shell
