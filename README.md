@@ -242,6 +242,8 @@ aws --profile ${DEFAULT_PROFILE} \
 }
 ```
 
+## Create the AWS IAM Group:
+
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
     --region ${DEFAULT_REGION} \
@@ -261,6 +263,8 @@ aws --profile ${DEFAULT_PROFILE} \
 }
 ```
 
+## Create the AWS IAM User:
+
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
     --region ${DEFAULT_REGION} \
@@ -279,6 +283,10 @@ aws --profile ${DEFAULT_PROFILE} \
     }
 }
 ```
+
+## Generate the (terraform) User:
+
+**Note**: This user's AWS IAM Access Key will be exported as environment variables (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY):
 
 ```shell
 declare -a session_items=(AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY);
