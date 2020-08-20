@@ -75,8 +75,8 @@ declare -a AWS_CREDENTIALS_TOKENS=(
 export DEFAULT_ROLEDURATION=3600;
 ```
 
-A JSON file needs to be generated to define what this AWS IAM Policy **DevOps--Custom-Access.Policy** will allow the **Service-Account** (***terraform***) to perform the privileges that are required.
-**Note**: I will start monitoring this service account's behavior (terraform) and accordingly restrict its privileges based on what is actually **required**.
+Generate a JSON file to define what this AWS IAM Policy **DevOps--Custom-Access.Policy** will allow the **Service-Account** (***terraform***) to perform the privileges that are required. This policy will be attached to the AWS IAM Role **DevOps--Custom-Access.Role**.
+**Note**: I will start monitoring this service account's behavior (***terraform***) and accordingly restrict its privileges based on what is actually **required**.
 
 ```console
 CONFIG_JSON="/tmp/${DEVOPS_ACCESS_POLICY}.json";
@@ -141,7 +141,7 @@ aws --profile ${DEFAULT_PROFILE} \
 }
 ```
 
-Generate this JSON file that will define the **Permission Boundary** for this IAM Role explicitly setting a boundary for what can be done and deny any no-regulated/defined privileges that could be attempted to be granted (e.g.: Administrator Access, etc.).
+Generate a JSON file to enforce via an AWS IAM Policy **Devops--Permission-Boundaries.Policy** what can be allowed and deny privileges that could be attempted to be self-granted (e.g.: Administrator Access, etc.). This policy will be attached to the AWS IAM Role **DevOps--Custom-Access.Role**.
 
 ```console
 CONFIG_JSON="/tmp/${DEVOPS_CUSTOM_BOUNDARY}.json";
