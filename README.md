@@ -43,7 +43,7 @@ I have always focused in supporting one key factor in automation:
 
 Combining all these steps into a single script is super simple but for me is more important to explain how it works than to obscure its logic with something scripted that then you will not be able to understand.
 
-I will guide you now through the process of configuring AWS Assume Role from scratch without having to use the Web-Console.
+I will guide you now through the process of configuring AWS Assume Role from scratch without having to use the Web-Console.<br>
 The process goes as follow:
 
 ---
@@ -214,6 +214,8 @@ tee -a ${CONFIG_JSON} <<BLOCK
 BLOCK
 ```
 
+### Create the IAM Policy:
+
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
     --region ${DEFAULT_REGION} \
@@ -238,7 +240,6 @@ aws --profile ${DEFAULT_PROFILE} \
     }
 }
 ```
-
 
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
