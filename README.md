@@ -559,11 +559,15 @@ aws --profile ${DEFAULT_PROFILE} \
 }
 ```
 
-**20** Reasign the **${AWS_SHARED_CREDENTIALS_FILE}** to activate this custom credentials file **${HOME}/.aws/access/${AWS_DEFAULT_ACCOUNT}/${DEFAULT_PROFILE}.credentials**
+**20**. Reasign the **${AWS_SHARED_CREDENTIALS_FILE}** to activate this custom credentials file **${HOME}/.aws/access/${AWS_DEFAULT_ACCOUNT}/${DEFAULT_PROFILE}.credentials**
 
 ```shell
 AWS_SHARED_CREDENTIALS_FILE="${target_credfile}";
 ```
+
+#### function [amazon_assumerole](https://github.com/emvaldes/devops-tools/blob/999e1550f10a5042c0dde267ed8d670caaa2e3f1/functions/devops-awscli.functions#L76)
+
+**Note**: This is an excerpt of the function describe above.
 
 ```shell
 declare -a session_token=($(
@@ -581,6 +585,8 @@ local counter=0; for xkey in "${session_token[@]}"; do
 done;
 ```
 
+**21**. Attempting to identify the User's (**terraform**) Identity this time will reflect that the user is still using the its default AWS IAM User's credentials and not the AWS IAM Role **DevOps--Custom-Access.Role** that was just assumed.
+
 ```shell
 aws --profile ${DEVOPS_USER} \
     --region ${DEFAULT_REGION} \
@@ -594,6 +600,7 @@ aws --profile ${DEVOPS_USER} \
     "Arn": "arn:aws:iam::{{ AWS_DEFAULT_ACCOUNT }}:user/{{ DEVOPS_USER }}"
 }
 ```
+**22**. Once this AWS IAM Role is assumed then these new credentials will need to be stored so they become permanently active at both the environment and file level into a custom credentials file.
 
 ```shell
 declare -a credentials=(
@@ -606,8 +613,12 @@ declare -a credentials=(
 for credential in ${credentials[@]}; do
   sed -i '' -e "s|^\(${credential%\~*}\)\( =\)\(.*\)$|\1\2 ${credential#*\~}|g" ${AWS_SHARED_CREDENTIALS_FILE} ;
 done;
+
 cat ${AWS_SHARED_CREDENTIALS_FILE} ;
 ```
+
+**23**. Attempt to identify the User's (caller) Identity this time will reflect the assumed AWS IAM Role **DevOps--Custom-Access.Role** is applied:
+
 
 ```shell
 aws --profile ${DEVOPS_USER} \
@@ -622,6 +633,8 @@ aws --profile ${DEVOPS_USER} \
     "Arn": "arn:aws:sts::{{ AWS_DEFAULT_ACCOUNT }}:assumed-role/{{ DEVOPS_ACCESS_ROLE }}/{{ DEVOPS_USER }}"
 }
 ```
+
+**Note**: This approach allows to dynamically assign the AWS IAM Role **DevOps--Custom-Access.Role** to any session by configuring the **${AWS_SHARED_CREDENTIALS_FILE}**.
 
 ---
 
