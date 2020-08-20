@@ -31,7 +31,26 @@ There is no need to midify the GitHub Secret **AWS_DEFAULT_PROFILE** as there is
 
 The logical switch **AWS_DEPLOY_TERRAFORM** is set to enable or disable the deployment of the terraform plan is a safety messure to ensure that a control-mechanism is in place. The same concept applies to **AWS_DESTROY_TERRAFORM** which is set to enable or disable the destruction of the previously deployed terraform infrastructure.
 
-**Note**: In addition to these basic/core requirements, it's important that a key-name **terraform** be created/active in AWS as it's hardcoded in this prototype. I will find a more efficient solution to this.
+**Note**: In addition to these basic/core requirements, it's important that a key-name **terraform** be created/active in AWS as it's hardcoded in this prototype. 
+
+
+Scripting has a significant drawback that is detrimental in understanding. It masks the behavior and logic for the sake of efficiency and this is never a good thing. It's imperative to understand the scripts because they will break and you need to know where and how to fix it.
+
+I personally and professionally despise people that uses the latest-latest technology innovation for the sake of pure vanity and childish logic to satisfy nothing but their ego and promote an environment of job-security. For that reason alone, I have always focused in supporting one key factor in automation:
+
+##Redability.
+
+It's key for anyone to be able of reading and understand what you write and not in following the idiotic Perl mentality of "I am going to show you how awesome I am building 100 commands into a single uber-cryptic one liner that only you can understand. That is not good programming at all.
+
+Combining all these steps into a single script is super simple but for me is more important to explain how it works than to obscure its logic with something scripted that then you will not be able to understand.
+
+---
+
+I will guide you now through the process of configuring AWS Assume Role from scratch without having to use the Web-Console.
+The process goes as follow:
+
+You must define these environment variables that will be used across these steps.
+Note: Make sure to set the AWS_DEFAULT_ACCOUNT with the correct information (the AWS Account you will be deploying this setup).
 
 ```shell
 DEFAULT_PROFILE='default';
@@ -56,6 +75,9 @@ declare -a AWS_CREDENTIALS_TOKENS=(
   );
 export DEFAULT_ROLEDURATION=3600;
 ```
+
+Generate this JSON file that will define what this **AWS IAM Policy** (***DevOps--Custom-Access.Policy***) will allow the **Service-Account** (***terraform***) to do. This AWS IAM Policy will be provisioned in the AWS IAM Role (***DevOps--Custom-Access.Role***).
+Note: I will start monitoring this service account's behavior (terraform) and accordingly restrict its privileges based on what is actually "required".
 
 ```console
 CONFIG_JSON="/tmp/${DEVOPS_ACCESS_POLICY}.json";
@@ -93,6 +115,8 @@ tee -a ${CONFIG_JSON} <<BLOCK
 BLOCK
 ```
 
+Create the IAM Policy:
+
 ```shell
 aws --profile ${DEFAULT_PROFILE} \
     --region ${DEFAULT_REGION} \
@@ -117,6 +141,8 @@ aws --profile ${DEFAULT_PROFILE} \
     }
 }
 ```
+
+Generate this JSON file that will define the **Permission Boundary** for this IAM Role explicitly setting a boundary for what can be done and deny any no-regulated/defined privileges that could be attempted to be granted (e.g.: Administrator Access, etc.).
 
 ```console
 CONFIG_JSON="/tmp/${DEVOPS_CUSTOM_BOUNDARY}.json";
