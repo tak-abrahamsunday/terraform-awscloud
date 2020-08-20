@@ -38,7 +38,7 @@ The logical switch **AWS_DEPLOY_TERRAFORM** is set to enable or disable the depl
 Scripting has always a significant drawback that is detrimental in understanding how things works and how they were built. It masks the behavior and logic for the sake of efficiency and this is never a good thing. It's imperative to understand the scripts because they will break and you need to know where and how to fix it.
 
 I have always focused in supporting one key factor in automation:
-## Readability[https://en.wikipedia.org/wiki/Computer_programming#Readability_of_source_code].
+## [Readability](https://en.wikipedia.org/wiki/Computer_programming#Readability_of_source_code)
 
 
 Combining all these steps into a single script is super simple but for me is more important to explain how it works than to obscure its logic with something scripted that then you will not be able to understand.
