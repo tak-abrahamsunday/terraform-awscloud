@@ -75,7 +75,7 @@ declare -a AWS_CREDENTIALS_TOKENS=(
 export DEFAULT_ROLEDURATION=3600;
 ```
 
-**01**. Generate a JSON file to define what this AWS IAM Policy **DevOps--Custom-Access.Policy** will allow the **Service-Account** (***terraform***) to perform the privileges that are required. This policy will be attached to the AWS IAM Role **DevOps--Custom-Access.Role**.
+<span style="color:red">**01**</span>. Generate a JSON file to define what this AWS IAM Policy **DevOps--Custom-Access.Policy** will allow the **Service-Account** (***terraform***) to perform the privileges that are required. This policy will be attached to the AWS IAM Role **DevOps--Custom-Access.Role**.
 
 **Note**: I will start monitoring this service account's behavior (***terraform***) and accordingly restrict its privileges based on what is actually **required**.
 
